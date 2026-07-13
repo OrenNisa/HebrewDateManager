@@ -1,32 +1,72 @@
-# React + TypeScript + Vite
+# 📅 מנהל תאריכים עבריים (Hebrew Date Manager)
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+אפליקציית Web מעוצבת ומתקדמת (Mobile-First) מבוססת **React + TypeScript + Material UI (MUI) v6** המאפשרת לנהל ולסנכרן אירועים עבריים חוזרים (כגון ימי הולדת, אזכרות ואירועים משפחתיים) ישירות לתוך **Google Calendar** - ללא שרת או בסיס נתונים חיצוני (Serverless / Client-only).
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ תכונות עיקריות (Key Features)
 
-## React Compiler
+* 📅 **סנכרון ישיר ליומן גוגל (Google Calendar API):** יצירה, עדכון ומחיקה של מופעים עתידיים ללא מאמץ.
+* ✡️ **ניהול מקרי קצה הלכתיים של הלוח העברי:**
+  * התאמה אוטומטית לשנים מעוברות (מיפוי בין אדר א' לאדר ב').
+  * טיפול אוטומטי בחודשים קצרים (כגון ל' בחשוון או ל' בכסלו שאינם קיימים בכל שנה, וממופים לתאריך הלועזי המקביל הנכון).
+  * אפשרות לציון אירועים שהתרחשו **לאחר השקיעה** (המעביר אוטומטית ליום העברי הבא).
+* 🔢 **מספור מופעים (גיל/שנת יום השנה):** הוספת מספור התחלתי המציג לכל מופע ביומן את השנה/הגיל שלו (לדוגמה: `יום הולדת אורן (30)`).
+* ⏰ **תזכורות מותאמות אישית:** תמיכה בהגדרת מספר תזכורות במייל או בהתראה (Pop-up) לכל אירוע (למשל: יום לפני, שבוע לפני).
+* 👤 **פרטיות מוחלטת (Privacy by Design):** האפליקציה פועלת צד-לקוח בלבד בדפדפן. מפתחות הגישה נשמרים זמנית בלבד ב-`sessionStorage` ונמחקים לחלוטין עם סגירת הכרטיסייה.
+* 🌓 **ממשק פרימיום מונגש (RTL & Dark Mode):** תמיכה מלאה בכיווניות ימין לשמאל ומעבר קל בין מצב יום ומצב לילה.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 🛠️ טכנולוגיות (Tech Stack)
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+* **Core:** React 19, TypeScript, Vite
+* **UI/Styling:** Material UI (MUI v6), Emotion RTL cache
+* **Calendar Logic:** `@hebcal/core`
+* **Google Integration:** Google Identity Services (GIS) לשם OAuth2 נוח ומאובטח.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+---
+
+## 🚀 הרצה מקומית (Quick Start)
+
+### 1. הורדה והתקנה
+שכפל את המאגר והתקן את התלויות:
+```bash
+git clone <URL_OF_REPO>
+cd HebrewDateManager
+npm install
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+### 2. הגדרת משתני סביבה
+צור קובץ `.env` בתיקיית השורש של הפרויקט (מבוסס על `.gitignore` המאבטח אותו מפני העלאה לגיט):
+```env
+VITE_GOOGLE_CLIENT_ID=your-google-client-id-here.apps.googleusercontent.com
+```
+*(לפרטים כיצד להפיק מזהה לקוח מגוגל, עיין במסמך התיעוד בפרק גוגל).*
+
+### 3. הרצה
+הפעל את שרת הפיתוח המקומי:
+```bash
+npm run dev
+```
+פתח את הדפדפן בכתובת המופיעה בטרמינל (לרוב `http://localhost:5173`).
+
+---
+
+## ☁️ העלאה לאוויר (Deployment)
+
+הפרויקט מותאם במיוחד להעלאה מהירה בחינם ל-**Cloudflare Pages** או **Vercel**:
+* **Framework preset:** `Vite`
+* **Build command:** `npm run build`
+* **Build output directory:** `dist`
+* **משתני סביבה:** הגדר את המשתנה `VITE_GOOGLE_CLIENT_ID` בממשק הניהול של שרת האחסון.
+
+---
+
+## 🔒 מדיניות פרטיות ואישור Google OAuth
+
+האפליקציה כוללת דף מדיניות פרטיות מובנה הנדרש על ידי גוגל לצורך תהליך האימות (Verification) להסרת אזהרת האבטחה למשתמשים קצה.
+ניתן לגשת לדף ישירות לאחר העלאת האתר בכתובות הבאות:
+* `https://your-domain.com/privacy`
+* `https://your-domain.com/#/privacy`
+* `https://your-domain.com/?page=privacy`
