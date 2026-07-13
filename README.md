@@ -63,10 +63,10 @@ npm run dev
 
 ---
 
-## 🔒 מדיניות פרטיות ואישור Google OAuth
+## 🔒 מדיניות פרטיות ותנאי שימוש (Google OAuth)
 
-האפליקציה כוללת דף מדיניות פרטיות מובנה הנדרש על ידי גוגל לצורך תהליך האימות (Verification) להסרת אזהרת האבטחה למשתמשים קצה.
-ניתן לגשת לדף ישירות לאחר העלאת האתר בכתובות הבאות:
-* `https://your-domain.com/privacy`
-* `https://your-domain.com/#/privacy`
-* `https://your-domain.com/?page=privacy`
+האפליקציה כוללת דפי מדיניות פרטיות ותנאי שימוש מובנים הנדרשים על ידי גוגל לצורך תהליך האימות (Verification) והסרת אזהרות אבטחה למשתמשי קצה.
+
+ניתן לגשת לדפים אלו ישירות בכתובות הבאות:
+* **מדיניות פרטיות (Privacy Policy):** `/privacy` או `/#/privacy` או `/?page=privacy`
+* **תנאי שימוש (Terms of Service):** `/terms` או `/#/terms` או `/?page=terms`

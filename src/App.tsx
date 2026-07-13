@@ -23,6 +23,8 @@ import type { EventFormValues } from './components/EventForm';
 import { EventList } from './components/EventList';
 import { SettingsModal } from './components/SettingsModal';
 import { PrivacyPage } from './components/PrivacyPage';
+import { TermsPage } from './components/TermsPage';
+import { Footer } from './components/Footer';
 
 import {
   fetchHebrewEventGroups,
@@ -115,13 +117,16 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   
-  // Simple client-side routing state for privacy page
-  const [currentRoute, setCurrentRoute] = useState<'home' | 'privacy'>(() => {
+  // Simple client-side routing state for privacy/terms pages
+  const [currentRoute, setCurrentRoute] = useState<'home' | 'privacy' | 'terms'>(() => {
     const path = window.location.pathname;
     const hash = window.location.hash;
     const search = window.location.search;
     if (path === '/privacy' || hash === '#/privacy' || search.includes('page=privacy')) {
       return 'privacy';
+    }
+    if (path === '/terms' || hash === '#/terms' || search.includes('page=terms')) {
+      return 'terms';
     }
     return 'home';
   });
@@ -134,6 +139,8 @@ function App() {
       const search = window.location.search;
       if (path === '/privacy' || hash === '#/privacy' || search.includes('page=privacy')) {
         setCurrentRoute('privacy');
+      } else if (path === '/terms' || hash === '#/terms' || search.includes('page=terms')) {
+        setCurrentRoute('terms');
       } else {
         setCurrentRoute('home');
       }
@@ -375,30 +382,40 @@ function App() {
     <CacheProvider value={cacheRtl}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Header
-          darkMode={darkMode}
-          onToggleTheme={handleToggleTheme}
-          onOpenSettings={() => setSettingsOpen(true)}
-          showSettingsButton={!import.meta.env.VITE_GOOGLE_CLIENT_ID}
-          isLoggedIn={authStatus}
-          onLogout={handleLogout}
-        />
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <Header
+            darkMode={darkMode}
+            onToggleTheme={handleToggleTheme}
+            onOpenSettings={() => setSettingsOpen(true)}
+            showSettingsButton={!import.meta.env.VITE_GOOGLE_CLIENT_ID}
+            isLoggedIn={authStatus}
+            onLogout={handleLogout}
+          />
 
-        <Container maxWidth="md" sx={{ py: 4 }}>
-          {error && (
-            <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }} onClose={() => setError(null)}>
-              {error}
-            </Alert>
-          )}
+          <Container maxWidth="md" sx={{ py: 4, flex: 1 }}>
+            {error && (
+              <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }} onClose={() => setError(null)}>
+                {error}
+              </Alert>
+            )}
 
-          {currentRoute === 'privacy' ? (
-            <PrivacyPage
-              onBack={() => {
-                window.history.pushState({}, '', '/');
-                setCurrentRoute('home');
-              }}
-            />
-          ) : !authStatus ? (
+            {currentRoute === 'privacy' ? (
+              <PrivacyPage
+                onBack={() => {
+                  window.history.pushState({}, '', '/');
+                  window.location.hash = '';
+                  setCurrentRoute('home');
+                }}
+              />
+            ) : currentRoute === 'terms' ? (
+              <TermsPage
+                onBack={() => {
+                  window.history.pushState({}, '', '/');
+                  window.location.hash = '';
+                  setCurrentRoute('home');
+                }}
+              />
+            ) : !authStatus ? (
             <AuthPage
               onLoginSuccess={handleLoginSuccess}
               onOpenSettings={() => setSettingsOpen(true)}
@@ -446,6 +463,9 @@ function App() {
             </Box>
           )}
         </Container>
+
+        <Footer />
+        </Box>
 
         {/* Global Success Toasts */}
         <Snackbar
