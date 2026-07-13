@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3f51b5" />
+      <stop offset="100%" stop-color="#009688" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Calendar Page Base -->
+  <rect x="40" y="80" width="432" height="392" rx="40" fill="#ffffff" stroke="#e0e0e0" stroke-width="8" />
+  
+  <!-- Header Bar -->
+  <path d="M40 120 c0 -22 18 -40 40 -40 h352 c22 0 40 18 40 40 v80 h-432 z" fill="url(#headerGrad)" />
+  
+  <!-- Binder Rings -->
+  <rect x="120" y="32" width="24" height="80" rx="12" fill="#757575" />
+  <rect x="368" y="32" width="24" height="80" rx="12" fill="#757575" />
+  
+  <!-- Calendar Lines (Decorative grid) -->
+  <line x1="80" y1="420" x2="432" y2="420" stroke="#eceff1" stroke-width="6" stroke-linecap="round" />
+  
+  <!-- Mathematically Perfect Star of David (Magen David) -->
+  <g stroke="#3f51b5" stroke-width="18" stroke-linejoin="round" stroke-linecap="round" fill="none">
+    <!-- Upward Triangle -->
+    <polygon points="256,210 334,345 178,345" />
+    <!-- Downward Triangle -->
+    <polygon points="256,390 334,255 178,255" />
+  </g>
+</svg>
