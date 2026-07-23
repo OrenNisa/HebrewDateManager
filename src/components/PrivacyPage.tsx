@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Box, Card, CardContent, Typography, Button, Divider } from '@mui/material';
+import { Container, Box, Card, CardContent, Typography, Button, Divider, Link } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ShieldOutlinedIcon from '@mui/icons-material/ShieldOutlined';
 
@@ -48,7 +48,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ onBack }) => {
               display: 'flex', 
               flexDirection: 'column', 
               gap: 3, 
-              textAlign: 'start', // Respects RTL direction, aligning text to the right
+              textAlign: 'start',
               width: '100%'
             }}
           >
@@ -67,42 +67,58 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ onBack }) => {
 
             <Box>
               <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-                2. אבטחה ושמירת מידע
+                2. נגישות למידע של משתמשי גוגל (Google User Data Access)
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-                האפליקציה פועלת כיישום צד-לקוח בלבד (Client-side application). 
-                <strong> אין לנו שרת חיצוני, ואיננו אוספים, שומרים, מעבדים או מעבירים מידע אישי כלשהו של המשתמשים שלנו לשום גורם חיצוני.</strong> כל חישובי לוח השנה והתאריכים מבוצעים באופן מקומי בדפדפן של המשתמש.
-              </Typography>
-            </Box>
-
-            <Box>
-              <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-                3. התחברות לגוגל (Google Calendar API)
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-                האפליקציה משתמשת בחיבור ישיר ומאובטח מול השרתים של גוגל באמצעות פרוטוקול OAuth 2.0 המנוהל על ידי גוגל:
+                האפליקציה מבקשת גישה להרשאת <code>https://www.googleapis.com/auth/calendar.events</code> לצורך ביצוע הפעולות הבאות בלבד:
                 <br />
-                • <strong>הרשאות גישה:</strong> הרשאת הגישה ליומן (<code>calendar.events</code>) משמשת אך ורק לצורך כתיבה, קריאה, עריכה ומחיקה של מופעי האירועים העבריים שהמשתמש בוחר ליצור ולנהל דרך האפליקציה.
+                • קריאה, יצירה, עריכה ומחיקה של אירועים ביומן גוגל של המשתמש שנוצרו על ידי האפליקציה (ומסומנים בתגית זיהוי פנימית).
                 <br />
-                • <strong>אחסון מפתחות גישה:</strong> מפתח הגישה ליומן (Access Token) נשמר באופן זמני בלבד בזיכרון המקומי הזמני של הדפדפן (<code>sessionStorage</code>) ונמחק לצמיתות מיד עם סגירת הדפדפן/כרטיסייה או עם ביצוע התנתקות (Logout) יזומה מהאפליקציה.
+                • האפליקציה אינה קוראת, אינה מעבדת ואינה שומרת אירועים אישיים אחרים ביומן גוגל של המשתמש.
               </Typography>
             </Box>
 
             <Box>
               <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-                4. אחסון מקומי (Local Storage)
+                3. מנגנוני הגנה ואבטחת מידע (Data Protection & Security)
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-                האפליקציה עושה שימוש ב-<code>localStorage</code> של הדפדפן שלך אך ורק לצורך שמירת העדפות תצוגה טכניות (כמו שמירת העדפת מצב כהה/בהיר) או שמירת מזהה לקוח (Client ID) לצורך פיתוח ובדיקות במידה והוגדר ידנית על ידך. מידע זה אינו מועבר לאף שרת חיצוני ונשאר מקומית על מכשירך בלבד.
+                • <strong>ארכיטקטורת צד-לקוח בלבד:</strong> האפליקציה פועלת בדפדפן המשתמש בלבד (Client-side). אין לנו שרת אחסון חיצוני, מסד נתונים או צד-שרת.
+                <br />
+                • <strong>אבטחת תקשורת:</strong> כל התקשורת מול שרתי גוגל מבוצעת בפרוטוקול מוצפן HTTPS דרך OAuth 2.0 הרשמי של גוגל.
+                <br />
+                • <strong>אי-שיתוף נתונים:</strong> איננו אוספים, איננו מוכרים ואיננו משתפים מידע של משתמשי גוגל עם שום גורם שלישי, מפרסמים או מודלי בינה מלאכותית (AI).
               </Typography>
             </Box>
 
             <Box>
               <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-                5. יצירת קשר
+                4. שמירת מידע ומחיקתו (Data Retention & Deletion)
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-                אם יש לך שאלות או תהיות לגבי מדיניות פרטיות זו או לגבי אופן פעולת האפליקציה, ניתן ליצור קשר עם המפתח בדוא"ל: <strong>Orennisa@gmail.com</strong>.
+                • <strong>אסימוני גישה (Tokens):</strong> מפתחות הגישה של Google OAuth נשמרים אך ורק בזיכרון הזמני בדפדפן (<code>sessionStorage</code>) ונמחקים לצמיתות מיד עם סגירת הכרטיסייה/הדפדפן או בעת התנתקות יזומה.
+                <br />
+                • <strong>אירועי יומן:</strong> האירועים שנכתבו ליומן גוגל נשארים בחשבון גוגל של המשתמש עד שהמשתמש בוחר למחוק אותם דרך האפליקציה או ישירות ביומן גוגל.
+                <br />
+                • <strong>ביטול גישה:</strong> המשתמש יכול לבטל את גישת האפליקציה בכל עת דרך <Link href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">הגדרות האבטחה של חשבון גוגל</Link>.
+              </Typography>
+            </Box>
+
+            <Box>
+              <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
+                5. עמידה במדיניות השימוש המוגבל של גוגל (Limited Use Disclosure)
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                השימוש והעברה של מידע שהתקבל מ-Google APIs לכל אפליקציה אחרת יצייתו ל-<Link href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</Link>, כולל דרישות ה-Limited Use.
+              </Typography>
+            </Box>
+
+            <Box>
+              <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
+                6. יצירת קשר
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                לכל שאלה או תהייה בנושא פרטיות ואבטחת מידע, ניתן ליצור קשר עם המפתח בדוא"ל: <strong>Orennisa@gmail.com</strong>.
               </Typography>
             </Box>
           </Box>
@@ -116,7 +132,7 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ onBack }) => {
               display: 'flex', 
               flexDirection: 'column', 
               gap: 3, 
-              textAlign: 'start', // Respects LTR direction, aligning text to the left
+              textAlign: 'start',
               width: '100%'
             }}
           >
@@ -126,51 +142,67 @@ export const PrivacyPage: React.FC<PrivacyPageProps> = ({ onBack }) => {
 
             <Box>
               <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-                1. General
+                1. General Overview
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-                The <strong>Hebrew Date Manager</strong> web application ("the Application") is designed to help users synchronize recurring Hebrew calendar events (such as birthdays, yahrzeits, and family events) directly to their Google Calendar. We respect your privacy and are committed to protecting it.
+                The <strong>Hebrew Date Manager</strong> web application ("the Application") helps users synchronize recurring Hebrew calendar events (such as birthdays, yahrzeits, and anniversaries) directly to their Google Calendar. We respect your privacy and are fully committed to protecting your data.
               </Typography>
             </Box>
 
             <Box>
               <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-                2. Security & Data Storage
+                2. Google User Data Access & Scopes
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-                The Application runs entirely as a client-side application in the user's browser. 
-                <strong> We do not own a database or any external server, and we do not collect, store, process, or transfer any of your personal data to any third party.</strong> All calendar calculations and conversions are processed locally on your device.
-              </Typography>
-            </Box>
-
-            <Box>
-              <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-                3. Google Calendar Integration (Google Calendar API)
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-                The Application establishes a direct, secure connection to Google servers using the official Google OAuth 2.0 protocol:
+                The Application requests access to the <code>https://www.googleapis.com/auth/calendar.events</code> scope for the following explicit purposes:
                 <br />
-                • <strong>Access Scopes:</strong> The calendar access scope (<code>calendar.events</code>) is used solely to read, create, edit, and delete the specific Hebrew calendar events that you choose to manage through the Application.
+                • To read, create, update, and delete specific Hebrew calendar events generated by the Application on the user's primary Google Calendar (tagged with a custom metadata identifier).
                 <br />
-                • <strong>Access Token Storage:</strong> Your Google API access credentials (access tokens) are only stored temporarily in your browser's session storage (<code>sessionStorage</code>) and are permanently cleared when you close the browser tab/window or click "Logout" in the Application.
+                • The Application does not access, read, process, or modify any unrelated personal calendar events.
               </Typography>
             </Box>
 
             <Box>
               <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-                4. Local Storage
+                3. Data Protection & Security Disclosures
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-                The Application utilizes the browser's <code>localStorage</code> solely to store technical and interface preferences (such as your light/dark mode preference or custom Google Client ID if manually configured). This data is stored locally on your device and is never sent to any external server.
+                • <strong>Client-Side Architecture:</strong> The Application operates entirely client-side in the user's web browser. We do not own or operate any external backend server, database, or cloud storage.
+                <br />
+                • <strong>Transit Encryption:</strong> All API communication with Google services is conducted over secure, encrypted HTTPS connections via Google's official OAuth 2.0 framework.
+                <br />
+                • <strong>No Data Sharing, Selling, or AI Training:</strong> We do not collect, store, share, transfer, or sell Google user data to any third parties, advertisers, data brokers, or AI/ML model trainers.
               </Typography>
             </Box>
 
             <Box>
               <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-                5. Contact Us
+                4. Data Retention and Deletion Disclosures
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-                If you have any questions or concerns regarding this Privacy Policy or the operations of the Application, please contact the developer via email: <strong>Orennisa@gmail.com</strong>.
+                • <strong>Token Retention & Deletion:</strong> Google OAuth access tokens are stored strictly in temporary browser memory (<code>sessionStorage</code>). Tokens are automatically deleted when the user closes the browser tab/window or clicks "Logout" within the Application.
+                <br />
+                • <strong>Calendar Event Retention & Deletion:</strong> Events created in Google Calendar remain in the user's Google Calendar until deleted by the user directly in Google Calendar or deleted using the Application's delete function. No event data is retained on any external server.
+                <br />
+                • <strong>Revoking Access:</strong> Users can revoke the Application's access at any time via <Link href="https://myaccount.google.com/permissions" target="_blank" rel="noopener">Google Account Security Permissions</Link>.
+              </Typography>
+            </Box>
+
+            <Box>
+              <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
+                5. Google API Services User Data Policy Compliance
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                Hebrew Date Manager's use and transfer of information received from Google APIs to any other app will adhere to the <Link href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</Link>, including the Limited Use requirements.
+              </Typography>
+            </Box>
+
+            <Box>
+              <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
+                6. Contact Information
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                If you have any questions or concerns regarding this Privacy Policy or data security, please contact the developer via email: <strong>Orennisa@gmail.com</strong>.
               </Typography>
             </Box>
           </Box>
