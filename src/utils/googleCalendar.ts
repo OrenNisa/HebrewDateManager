@@ -323,6 +323,7 @@ export async function createHebrewEventGroup(
       description,
       start: { date: dateStr },
       end: { date: endDateStr },
+      transparency: 'transparent',
       reminders: apiReminders,
       extendedProperties: {
         private: {
@@ -428,6 +429,7 @@ export async function patchEventGroupMetadata(
     const id = eventIds[i];
     const body = {
       summary: name,
+      transparency: 'transparent',
       reminders: apiReminders,
     };
     

@@ -332,11 +332,7 @@ export const EventForm: React.FC<EventFormProps> = ({
                     setOccurrenceCount(Math.max(1, Number(e.target.value)));
                     setIsCountOverridden(true);
                   }}
-                  slotProps={{ htmlInput: { min: 1, max: 120 } }}
                 />
-                <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
-                  {!startNumber ? 'ברירת מחדל: 30 מופעים' : 'ברירת מחדל: השלמה ל-120'}
-                </Typography>
               </Box>
             </Grid>
 
