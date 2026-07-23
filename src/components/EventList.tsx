@@ -71,12 +71,15 @@ export const EventList: React.FC<EventListProps> = ({
 
   // Reminders text formatting
   const getReminderLabel = (minutes: number) => {
+    if (minutes === 0) return 'בזמן האירוע';
     if (minutes === 1440) return 'יום לפני';
     if (minutes === 4320) return '3 ימים לפני';
     if (minutes === 10080) return 'שבוע לפני';
     if (minutes === 20160) return 'שבועיים לפני';
     if (minutes === 43200) return 'חודש לפני';
-    return `${minutes / 60} שעות לפני`;
+    if (minutes < 60) return `${minutes} דקות לפני`;
+    if (minutes % 60 === 0) return `${minutes / 60} שעות לפני`;
+    return `${(minutes / 60).toFixed(1)} שעות לפני`;
   };
 
   // Delete Action Trigger

@@ -285,7 +285,7 @@ export async function createHebrewEventGroup(
   
   // Format reminders for Google Calendar API
   const apiReminders = {
-    useDefault: reminders.length === 0,
+    useDefault: false,
     overrides: reminders.map(minutes => ({
       method: 'popup',
       minutes,
@@ -414,7 +414,7 @@ export async function patchEventGroupMetadata(
 ): Promise<void> {
   const total = eventIds.length;
   const apiReminders = {
-    useDefault: reminders.length === 0,
+    useDefault: false,
     overrides: reminders.map(minutes => ({
       method: 'popup',
       minutes,
